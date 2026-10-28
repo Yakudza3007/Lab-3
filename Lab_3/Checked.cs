@@ -10,12 +10,14 @@ internal class Checked
         {
             Console.Write(prompt);
             string input = Console.ReadLine();
-            if (int.TryParse(input, out int result)) return result;
+            if (int.TryParse(input, out int result)) return 
+                result;
             Console.WriteLine("Ошибка: введите целое число.");
         }
     }
 
-    public int ReadIntInRange(string prompt, int minValue, int maxValue)
+    public int ReadIntInRange(string prompt, int minValue, int 
+        maxValue)
     {
         while (true)
         {
@@ -24,7 +26,8 @@ internal class Checked
             {
                 return result;
             }
-            Console.WriteLine($"Ошибка: введите число от {minValue} до {maxValue}.");
+            Console.WriteLine($"Ошибка: введите число от {
+                minValue} до {maxValue}.");
         }
     }
 
@@ -34,8 +37,10 @@ internal class Checked
         {
             Console.Write(prompt);
             string input = Console.ReadLine();
-            if (double.TryParse(input, out double result)) return result;
-            Console.WriteLine("Ошибка: введите число (можно с запятой или точкой).");
+            if (double.TryParse(input, out double result)) return 
+                result;
+            Console.WriteLine("Ошибка: введите число (можно " +
+                              "с запятой или точкой).");
         }
     }
 
@@ -46,7 +51,8 @@ internal class Checked
             Console.Write(prompt);
             string input = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(input)) return input;
-            Console.WriteLine("Ошибка: строка не может быть пустой.");
+            Console.WriteLine("Ошибка: строка не может быть " +
+                              "пустой.");
         }
     }
 }

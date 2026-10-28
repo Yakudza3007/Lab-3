@@ -11,16 +11,23 @@ namespace ConsoleApp1
             while (true)
             {
                 Console.WriteLine("\n0 - Выход из программы");
-                Console.WriteLine("1 - Заполнение двумерных массивов");
-                Console.WriteLine("2 - Работа с двумерными массивами");
-                Console.WriteLine("3 - Работа с двумерными массивами как с матрицами");
+                Console.WriteLine("1 - Заполнение двумерных " +
+                                  "массивов");
+                Console.WriteLine("2 - Работа с двумерными " +
+                                  "массивами");
+                Console.WriteLine("3 - Работа с двумерными " +
+                                  "массивами как с матрицами");
                 Console.WriteLine("4 - Бинарные файлы");
-                Console.WriteLine("5 - Бинарные файлы и структуры");
+                Console.WriteLine("5 - Бинарные файлы и " +
+                                  "структуры");
                 Console.WriteLine("6 - Текстовые файлы");
-                Console.WriteLine("7 - Решение задачи с помощью структуры \"текстовый файл\"");
+                Console.WriteLine("7 - Решение задачи с " +
+                                  "помощью структуры " +
+                                  "\"текстовый файл\"");
                 Console.WriteLine("8 - Текстовый файл");
 
-                int choice = c.ReadIntInRange("Выберите задание: ", 0, 8);
+                int choice = c.ReadIntInRange("Выберите " +
+                    "задание: ", 0, 8);
 
                 switch (choice)
                 {
@@ -43,10 +50,13 @@ namespace ConsoleApp1
                         RunTask5(c);
                         break;
                     case 6:
+                        RunTask6(c);
                         break;
                     case 7:
+                        RunTask7(c);
                         break;
                     case 8:
+                        RunTask8(c);
                         break;
                 }
             }
@@ -55,10 +65,13 @@ namespace ConsoleApp1
         private static void RunTask1(Checked c)
         {
             Console.WriteLine("\n=== Задание 1 ===");
-            int rowCount = c.ReadIntInRange("Введите размер n: ", 1, 100);
-            int columnCount = c.ReadIntInRange("Введите размер m: ", 1, 100);
+            int rowCount = c.ReadIntInRange("Введите " +
+                "размер n: ", 1, 100);
+            int columnCount = c.ReadIntInRange("Введите " +
+                "размер m: ", 1, 100);
 
-            Matrix matrix1 = new Matrix(rowCount, columnCount);
+            Matrix matrix1 = new Matrix(rowCount, 
+                columnCount);
             Console.WriteLine("\nМатрица 1:");
             Console.WriteLine(matrix1.ToString());
 
@@ -74,10 +87,13 @@ namespace ConsoleApp1
         private static void RunTask2(Checked c)
         {
             Console.WriteLine("\n=== Задание 2 ===");
-            int rowCount = c.ReadIntInRange("Введите количество строк: ", 1, 20);
-            int columnCount = c.ReadIntInRange("Введите количество столбцов: ", 1, 20);
+            int rowCount = c.ReadIntInRange("Введите " +
+                "количество строк: ", 1, 20);
+            int columnCount = c.ReadIntInRange("Введите " +
+                "количество столбцов: ", 1, 20);
 
-            Matrix matrix = new Matrix(rowCount, columnCount, true);
+            Matrix matrix = new Matrix(rowCount, columnCount, 
+                true);
     
             Console.WriteLine("\nИсходная матрица:");
             Console.WriteLine(matrix.ToString());
@@ -89,17 +105,24 @@ namespace ConsoleApp1
         private static void RunTask3(Checked c)
         {
             Console.WriteLine("\n=== Задание 3 ===");
-            int m = c.ReadIntInRange("Введите количество строк (m): ", 1, 10);
-            int n = c.ReadIntInRange("Введите количество столбцов (n): ", 1, 10);
+            int m = c.ReadIntInRange("Введите " +
+                                     "количество строк (m): ", 
+                1, 10);
+            int n = c.ReadIntInRange("Введите " +
+                                     "количество столбцов (n): ", 
+                1, 10);
 
             Console.WriteLine($"\nВвод матрицы A ({m}x{n}):");
-            Matrix a = new Matrix(m, n, true);
+            Matrix a = new Matrix(m, n, 
+                true);
 
             Console.WriteLine($"\nВвод матрицы B ({m}x{n}):");
-            Matrix b = new Matrix(m, n, true);
+            Matrix b = new Matrix(m, n, 
+                true);
 
             Console.WriteLine($"\nВвод матрицы C ({n}x{m}):");
-            Matrix matrixC = new Matrix(n, m, true);
+            Matrix matrixC = new Matrix(n, m, 
+                true);
 
             Matrix result = 2 * a + (b - matrixC.Transpose());
 
@@ -109,10 +132,12 @@ namespace ConsoleApp1
             Console.WriteLine("\nМатрица B:");
             Console.WriteLine(b.ToString());
 
-            Console.WriteLine("\nМатрица C^T (транспонированная):");
+            Console.WriteLine("\nМатрица C^T " +
+                              "(транспонированная):");
             Console.WriteLine(matrixC.Transpose().ToString());
 
-            Console.WriteLine("\nРезультат выражения 2*A + (B - C^T):");
+            Console.WriteLine("\nРезультат выражения 2*A + " +
+                              "(B - C^T):");
             Console.WriteLine(result.ToString());
         }
         
@@ -126,6 +151,24 @@ namespace ConsoleApp1
         {
             Console.WriteLine("\n=== Задание 5 ===");
             FileTasks.Task5(c);
+        }
+        
+        private static void RunTask6(Checked c)
+        {
+            Console.WriteLine("\n=== Задание 6 ===");
+            FileTasks.Task6(c);
+        }
+        
+        private static void RunTask7(Checked c)
+        {
+            Console.WriteLine("\n=== Задание 7 ===");
+            FileTasks.Task7(c);
+        }
+        
+        private static void RunTask8(Checked c)
+        {
+            Console.WriteLine("\n=== Задание 8 ===");
+            FileTasks.Task8(c);
         }
     }
 }
