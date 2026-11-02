@@ -9,39 +9,44 @@ namespace ConsoleApp1
         public Matrix(int n, int m)
         {
             Checked c = new Checked();
-            _array = new int[n, m];
-            Console.WriteLine($"\nЗаполнение массива {n}x{m} " +
-                              $"по диагоналям:");
-    
-            for (int diagonalOffset = m - 1; diagonalOffset >= 
-                 -(n - 1); diagonalOffset--)
-            {
-                int startRow = Math.Max(0, -diagonalOffset);
-                int endRow = Math.Min(n - 1, m - 1 - 
-                    diagonalOffset);
+            int diagonalOffset;
+            int startRow;
+            int endRow;
+            int row;
+            int column;
 
-                for (int row = startRow; row <= endRow; row++)
+            _array = new int[n, m];
+            Console.WriteLine($"\nЗаполнение массива {n}x{m} по диагоналям:");
+    
+            for (diagonalOffset = m - 1; diagonalOffset >= -(n - 1); diagonalOffset--)
+            {
+                startRow = Math.Max(0, -diagonalOffset);
+                endRow = Math.Min(n - 1, m - 1 - diagonalOffset);
+
+                for (row = startRow; row <= endRow; row++)
                 {
-                    int column = row + diagonalOffset;
-                    _array[row, column] = c.ReadInt(
-                        $"Введите " +
-                        $"элемент [{row},{column}]: ");
+                    column = row + diagonalOffset;
+                    _array[row, column] = c.ReadInt($"Введите элемент [{row},{column}]: ");
                 }
             }
         }
 
         public Matrix(int n)
         {
-            _array = new int[n, n];
+            int column;
+            int[] temp;
+            int i;
+            int row;
             Random random = new Random();
-            Console.WriteLine($"\nЗаполнение массива {n}x{n} " +
-                              $"случайными числами:");
 
-            for (int column = 0; column < n; column++)
+            _array = new int[n, n];
+            Console.WriteLine($"\nЗаполнение массива {n}x{n} случайными числами:");
+
+            for (column = 0; column < n; column++)
             {
-                int[] temp = new int[n];
+                temp = new int[n];
         
-                for (int i = 0; i < n; i++)
+                for (i = 0; i < n; i++)
                 {
                     temp[i] = random.Next(-100, 100);
                 }
@@ -49,7 +54,7 @@ namespace ConsoleApp1
                 Array.Sort(temp);
                 Array.Reverse(temp);
 
-                for (int row = 0; row < n; row++)
+                for (row = 0; row < n; row++)
                 {
                     _array[row, column] = temp[row];
                 }
@@ -58,39 +63,42 @@ namespace ConsoleApp1
 
         public Matrix(int n, bool isSpiral)
         {
+            int currentRow;
+            int currentColumn;
+            int currentValue;
+            int stepLength;
+            int[] rowOffsets;
+            int[] columnOffsets;
+            int direction;
+            int turnCounter;
+            int stepCounter;
+
             _array = new int[n, n];
-            Console.WriteLine($"\nЗаполнение массива {n}x{n} " +
-                              $"спиралью:");
+            Console.WriteLine($"\nЗаполнение массива {n}x{n} спиралью:");
 
-            int currentRow = (n - 1) / 2;
-            int currentColumn = (n - 1) / 2;
-            int currentValue = 1;
-            int stepLength = 1;
+            currentRow = (n - 1) / 2;
+            currentColumn = (n - 1) / 2;
+            currentValue = 1;
+            stepLength = 1;
 
-            int[] rowOffsets = { 0, 1, 0, -1 };
-            int[] columnOffsets = { -1, 0, 1, 0 };
-            int direction = 0;
+            rowOffsets = new int[] { 0, 1, 0, -1 };
+            columnOffsets = new int[] { -1, 0, 1, 0 };
+            direction = 0;
 
             _array[currentRow, currentColumn] = currentValue++;
 
             while (currentValue <= n * n)
             {
-                for (int turnCounter = 0; turnCounter < 2; 
-                     turnCounter++)
+                for (turnCounter = 0; turnCounter < 2; turnCounter++)
                 {
-                    for (int stepCounter = 0; stepCounter < 
-                         stepLength; stepCounter++)
+                    for (stepCounter = 0; stepCounter < stepLength; stepCounter++)
                     {
                         currentRow += rowOffsets[direction];
                         currentColumn += columnOffsets[direction];
 
-                        if (currentRow >= 0 && currentRow < n && 
-                            currentColumn >= 0 && currentColumn < 
-                            n && _array[
-                                currentRow, currentColumn] == 0)
+                        if (currentRow >= 0 && currentRow < n && currentColumn >= 0 && currentColumn < n && _array[currentRow, currentColumn] == 0)
                         {
-                            _array[currentRow, currentColumn] =
-                                currentValue++;
+                            _array[currentRow, currentColumn] = currentValue++;
                         }
                     }
                     direction = (direction + 1) % 4;
@@ -99,25 +107,23 @@ namespace ConsoleApp1
             }
         }
         
-        public Matrix(int rowCount, int columnCount, bool 
-            isStandardInput)
+        public Matrix(int rowCount, int columnCount, bool isStandardInput)
         {
+            Checked c = new Checked();
+            int row;
+            int column;
+
             _array = new int[rowCount, columnCount];
             
             if (isStandardInput)
             {
-                Checked c = new Checked();
-                Console.WriteLine($"\nЗаполнение массива {
-                    rowCount}x{columnCount} в обычном порядке:");
+                Console.WriteLine($"\nЗаполнение массива {rowCount}x{columnCount} в обычном порядке:");
 
-                for (int row = 0; row < rowCount; row++)
+                for (row = 0; row < rowCount; row++)
                 {
-                    for (int column = 0; column < columnCount; 
-                         column++)
+                    for (column = 0; column < columnCount; column++)
                     {
-                        _array[row, column] = c.ReadInt(
-                            $"Введите элемент " +
-                            $"[{row},{column}]: ");
+                        _array[row, column] = c.ReadInt($"Введите элемент [{row},{column}]: ");
                     }
                 }
             }
@@ -130,100 +136,100 @@ namespace ConsoleApp1
         
         public Matrix Transpose()
         {
-            int rowCount = _array.GetLength(0);
-            int columnCount = _array.GetLength(1);
-            Matrix result = new Matrix(columnCount, rowCount, 
-                false);
+            int rowCount;
+            int columnCount;
+            Matrix result;
+            int row;
+            int column;
 
-            for (int row = 0; row < rowCount; row++)
+            rowCount = _array.GetLength(0);
+            columnCount = _array.GetLength(1);
+            result = new Matrix(columnCount, rowCount, false);
+
+            for (row = 0; row < rowCount; row++)
             {
-                for (int column = 0; column < columnCount; 
-                     column++)
+                for (column = 0; column < columnCount; column++)
                 {
-                    result.Data[column, row] = _array[row, 
-                        column];
+                    result.Data[column, row] = _array[row, column];
                 }
             }
 
             return result;
         }
 
-        public static Matrix operator +(Matrix left, Matrix 
-            right)
+        public static Matrix operator +(Matrix left, Matrix right)
         {
-            if (left._array.GetLength(0) != 
-                right._array.GetLength(0) || 
-                left._array.GetLength(1) != 
-                right._array.GetLength(1))
+            int rowCount;
+            int columnCount;
+            Matrix result;
+            int row;
+            int column;
+
+            if (left._array.GetLength(0) != right._array.GetLength(0) || left._array.GetLength(1) != right._array.GetLength(1))
             {
-                throw new ArgumentException("Размеры матриц " +
-                    "не совпадают.");
+                throw new ArgumentException("Размеры матриц не совпадают.");
             }
 
-            int rowCount = left._array.GetLength(0);
-            int columnCount = left._array.GetLength(1);
-            Matrix result = new Matrix(rowCount, columnCount, 
-                false);
+            rowCount = left._array.GetLength(0);
+            columnCount = left._array.GetLength(1);
+            result = new Matrix(rowCount, columnCount, false);
 
-            for (int row = 0; row < rowCount; row++)
+            for (row = 0; row < rowCount; row++)
             {
-                for (int column = 0; column < columnCount; 
-                     column++)
+                for (column = 0; column < columnCount; column++)
                 {
-                    result.Data[row, column] = left._array[
-                        row, column] + right._array[row, column];
+                    result.Data[row, column] = left._array[row, column] + right._array[row, column];
                 }
             }
 
             return result;
         }
 
-        public static Matrix operator -(Matrix left, Matrix 
-            right)
+        public static Matrix operator -(Matrix left, Matrix right)
         {
-            if (left._array.GetLength(0) != 
-                right._array.GetLength(0) || 
-                left._array.GetLength(1) != 
-                right._array.GetLength(1))
+            int rowCount;
+            int columnCount;
+            Matrix result;
+            int row;
+            int column;
+
+            if (left._array.GetLength(0) != right._array.GetLength(0) || left._array.GetLength(1) != right._array.GetLength(1))
             {
-                throw new ArgumentException("Размеры матриц " +
-                    "не совпадают.");
+                throw new ArgumentException("Размеры матриц не совпадают.");
             }
 
-            int rowCount = left._array.GetLength(0);
-            int columnCount = left._array.GetLength(1);
-            Matrix result = new Matrix(rowCount, columnCount, 
-                false);
+            rowCount = left._array.GetLength(0);
+            columnCount = left._array.GetLength(1);
+            result = new Matrix(rowCount, columnCount, false);
 
-            for (int row = 0; row < rowCount; row++)
+            for (row = 0; row < rowCount; row++)
             {
-                for (int column = 0; column < columnCount; 
-                     column++)
+                for (column = 0; column < columnCount; column++)
                 {
-                    result.Data[row, column] = left._array[
-                        row, column] - right._array[row, column];
+                    result.Data[row, column] = left._array[row, column] - right._array[row, column];
                 }
             }
 
             return result;
         }
 
-        public static Matrix operator *(int scalar, Matrix 
-            matrix)
+        public static Matrix operator *(int scalar, Matrix matrix)
         {
-            int rowCount = matrix._array.GetLength(0);
-            int columnCount = matrix._array.GetLength(
-                1);
-            Matrix result = new Matrix(rowCount, columnCount, 
-                false);
+            int rowCount;
+            int columnCount;
+            Matrix result;
+            int row;
+            int column;
 
-            for (int row = 0; row < rowCount; row++)
+            rowCount = matrix._array.GetLength(0);
+            columnCount = matrix._array.GetLength(1);
+            result = new Matrix(rowCount, columnCount, false);
+
+            for (row = 0; row < rowCount; row++)
             {
-                for (int column = 0; column < columnCount; 
-                     column++)
+                for (column = 0; column < columnCount; column++)
                 {
-                    result.Data[row, column] = scalar * 
-                        matrix._array[row, column];
+                    result.Data[row, column] = scalar * matrix._array[row, column];
                 }
             }
 
@@ -232,35 +238,46 @@ namespace ConsoleApp1
 
         public void PrintFibonacciFormat()
         {
-            int rowCount = _array.GetLength(0);
-            int columnCount = _array.GetLength(1);
-            int totalElements = rowCount * columnCount;
-            int currentIndex = 0;
-            int previousFib = 0;
-            int currentFib = 1;
+            int rowCount;
+            int columnCount;
+            int totalElements;
+            int currentIndex;
+            int previousFib;
+            int currentFib;
+            int elementsToPrint;
+            int i;
+            int row;
+            int column;
+            int nextFib;
+
+            rowCount = _array.GetLength(0);
+            columnCount = _array.GetLength(1);
+            totalElements = rowCount * columnCount;
+            currentIndex = 0;
+            previousFib = 0;
+            currentFib = 1;
 
             while (currentIndex < totalElements)
             {
-                int elementsToPrint = currentFib;
+                elementsToPrint = currentFib;
 
-                for (int i = 0; i < elementsToPrint; i++)
+                for (i = 0; i < elementsToPrint; i++)
                 {
                     if (currentIndex >= totalElements)
                     {
                         break;
                     }
 
-                    int row = currentIndex / columnCount;
-                    int column = currentIndex % columnCount;
+                    row = currentIndex / columnCount;
+                    column = currentIndex % columnCount;
 
-                    Console.Write(_array[row, column].ToString(
-                        ).PadLeft(5) + " ");
+                    Console.Write(_array[row, column].ToString().PadLeft(5) + " ");
                     currentIndex++;
                 }
 
                 Console.WriteLine();
 
-                int nextFib = previousFib + currentFib;
+                nextFib = previousFib + currentFib;
                 previousFib = currentFib;
                 currentFib = nextFib;
             }
@@ -268,17 +285,21 @@ namespace ConsoleApp1
 
         public override string ToString()
         {
-            string result = "";
-            int rowCount = _array.GetLength(0);
-            int columnCount = _array.GetLength(1);
+            string result;
+            int rowCount;
+            int columnCount;
+            int row;
+            int column;
 
-            for (int row = 0; row < rowCount; row++)
+            result = "";
+            rowCount = _array.GetLength(0);
+            columnCount = _array.GetLength(1);
+
+            for (row = 0; row < rowCount; row++)
             {
-                for (int column = 0; column < columnCount; 
-                     column++)
+                for (column = 0; column < columnCount; column++)
                 {
-                    result += _array[row, column].ToString(
-                        ).PadLeft(5) + " ";
+                    result += _array[row, column].ToString().PadLeft(5) + " ";
                 }
                 result += "\n";
             }
